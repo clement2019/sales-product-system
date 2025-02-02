@@ -33,13 +33,13 @@ def addrec():
             # Connect to SQLite3 database and execute the INSERT
             with sqlite3.connect('database.db') as con:
                 cur = con.cursor()
-                cur.execute("INSERT INTO product (name, price, quantity,sku_no) VALUES (?,?,?)",(name, price, quantity,sku_no))
+                cur.execute("INSERT INTO product (name, price, quantity,sku_no) VALUES (?,?,?,?)",(name, price, quantity,sku_no))
 
                 con.commit()
                 msg = "Record successfully added to database, thanks"
         except:
             con.rollback()
-            msg = "Error in the INSERT"
+            msg = "Error"
 
         finally:
             con.close()
