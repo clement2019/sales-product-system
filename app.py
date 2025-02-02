@@ -28,12 +28,12 @@ def addrec():
             name = request.form['name']
             price = request.form['price']
             quantity = request.form['quantity']
-            #sku = request.form['sku']
+            sku_no = request.form['sku_no']
 
             # Connect to SQLite3 database and execute the INSERT
             with sqlite3.connect('database.db') as con:
                 cur = con.cursor()
-                cur.execute("INSERT INTO product (name, price, quantity) VALUES (?,?,?)",(name, price, quantity))
+                cur.execute("INSERT INTO product (name, price, quantity,sku_no) VALUES (?,?,?)",(name, price, quantity,sku_no))
 
                 con.commit()
                 msg = "Record successfully added to database, thanks"
@@ -95,18 +95,18 @@ def editrec():
             name = request.form['name']
             price = request.form['price']
             quantity = request.form['quantity']
-            #sku = request.form['sku']
+            sku_no = request.form['sku_no']
 
             # UPDATE a specific record in the database based on the rowid
             with sqlite3.connect('database.db') as con:
                 cur = con.cursor()
-                cur.execute("UPDATE product SET name='"+name+"', price='"+price+"', quantity='"+quantity+"' WHERE rowid="+rowid)
+                cur.execute("UPDATE product SET name='"+name+"', price='"+price+"', quantity='"+quantity+"' , sku_no='"+sku_no+"' WHERE rowid="+rowid)
 
                 con.commit()
                 msg = "Record successfully edited in the database"
         except:
             con.rollback()
-            msg = "Error in the Edit: UPDATE product SET name="+name+", price="+price+", quantity="+quantity+", WHERE rowid="+rowid
+            msg = "Error in the Edit: UPDATE product SET name="+name+", price="+price+", quantity="+quantity+" , sku_no='"+sku_no+"' WHERE rowid="+rowid
 
         finally:
             con.close()
