@@ -5,17 +5,21 @@ import sqlite3
 
 app = Flask(__name__)
 
+#def get_db_connection():
+    #con = sqlite3.connect('database.db')
+    #return con
+
 # Home Page route
 @app.route("/")
 def home():
     return render_template("home.html")
 
-# Route to form used to add a new student to the database
+# Route to form used to add a new product to the database
 @app.route("/enternew")
 def enternew():
     return render_template("product.html")
 
-# Route to add a new record (INSERT) student data to the database
+# Route to add a new record (INSERT) product data to the database
 @app.route("/addrec", methods = ['POST', 'GET'])
 def addrec():
     # Data will be available from POST submitted by the form
@@ -24,12 +28,12 @@ def addrec():
             name = request.form['name']
             price = request.form['price']
             quantity = request.form['quantity']
-            skw_no = request.form['skw_no']
+            #sku = request.form['sku']
 
             # Connect to SQLite3 database and execute the INSERT
             with sqlite3.connect('database.db') as con:
                 cur = con.cursor()
-                cur.execute("INSERT INTO product (name, price, quantity, skw_no) VALUES (?,?,?,?)",(name, price, quantity, skw_no))
+                cur.execute("INSERT INTO product (name, price, quantity) VALUES (?,?,?)",(name, price, quantity))
 
                 con.commit()
                 msg = "Record successfully added to database, thanks"
@@ -46,7 +50,7 @@ def addrec():
 @app.route('/list')
 def list():
     # Connect to the SQLite3 datatabase and 
-    # SELECT rowid and all Rows from the students table.
+    # SELECT rowid and all Rows from the product table.
     con = sqlite3.connect("database.db")
     con.row_factory = sqlite3.Row
 
@@ -91,18 +95,18 @@ def editrec():
             name = request.form['name']
             price = request.form['price']
             quantity = request.form['quantity']
-            skw_no = request.form['skw_no']
+            #sku = request.form['sku']
 
             # UPDATE a specific record in the database based on the rowid
             with sqlite3.connect('database.db') as con:
                 cur = con.cursor()
-                cur.execute("UPDATE product SET name='"+name+"', price='"+price+"', quantity='"+quantity+"', skw_no='"+skw_no+"' WHERE rowid="+rowid)
+                cur.execute("UPDATE product SET name='"+name+"', price='"+price+"', quantity='"+quantity+"' WHERE rowid="+rowid)
 
                 con.commit()
                 msg = "Record successfully edited in the database"
         except:
             con.rollback()
-            msg = "Error in the Edit: UPDATE product SET name="+name+", price="+price+", quantity="+quantity+", skw_no="+skw_no+" WHERE rowid="+rowid
+            msg = "Error in the Edit: UPDATE product SET name="+name+", price="+price+", quantity="+quantity+", WHERE rowid="+rowid
 
         finally:
             con.close()
@@ -134,4 +138,4 @@ def delete():
         
 if __name__ == '__main__':
       
-         app.run(debug = True,port=5008)
+         app.run(debug = True,port=5007)

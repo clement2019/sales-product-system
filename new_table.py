@@ -12,7 +12,7 @@ import sqlite3
 conn = sqlite3.connect('database.db')
 print("Database connected successfully")
 
-conn.execute('CREATE TABLE product (name TEXT, price TEXT, quantity TEXT, sku_no TEXT)')
+conn.execute('CREATE TABLE product (name TEXT, price TEXT, quantity TEXT, sku TEXT)')
 
 
 print("Created table successfully!")

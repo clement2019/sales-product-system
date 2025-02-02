@@ -9,9 +9,8 @@ List All Products
                 <td><strong>name</strong></td>
                 <td><strong>price</strong></td>
                 <td><strong>quantity</strong></td>
-                <td><strong>skw_no</strong></td>
-                <td></td>
-                <td></td>
+                
+                
             </thead>
 
             {% for row in rows %}
@@ -20,9 +19,8 @@ List All Products
                 <td>{{ row["name"] }}</td>
                 <td> {{ row["price"]}}</td>
                 <td>{{ row["quantity"] }}</td>
-                <td>{{ row["skw_no"] }}</td>
                 <td><form action="{{url_for('edit')}}" method="POST"><input type="hidden" name="id" value="{{ row['rowid'] }}"><input type="submit" value="Edit"></form> </td>
-                <td><form onsubmit="return confirm('Are you sure you want to DELETE this Student from the Database?');" action="{{url_for('delete')}}" method="POST"><input type="hidden" name="id" value="{{ row['rowid'] }}"><input type="submit" value="Delete"></form> </td>
+                <td><form onsubmit="return confirm('Are you sure you want to DELETE this Product from the Database?');" action="{{url_for('delete')}}" method="POST"><input type="hidden" name="id" value="{{ row['rowid'] }}"><input type="submit" value="Delete"></form> </td>
             </tr>
             {% endfor %}
         </table>
